@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Classroom Manager</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <div class="logo">
+          <i class="fa-solid fa-chalkboard-user"></i>
+          <h2>Classroom Manager</h2>
+        </div>
+        <nav>
+          <ul>
+            <li>
+              <a href="#attendance-section">Attendance Tracking</a>
+            </li>
+            <li>
+              <a href="#homework-section">Homework Management</a>
+            </li>
+            <li>
+              <a href="#announcements-section"
+                >Announcements
+                <span id="announcement-count" class="count-badge">0</span>
+              </a>
+            </li>
+            <li>
+              <a href="#student-profiles-section"
+                >Student Profiles
+                <span id="student-profile-count" class="count-badge">0</span>
+              </a>
+            </li>
+            <li><a href="#calendar-section">Your Time-Table</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="main-content">
+        <div class="header">
+          <h1 id="dashboard-title">Dashboard 📘</h1>
+          <select
+            id="class-selection"
+            onchange="showClassDetails(event.target.value)"
+          >
+            <option value="">Select Class</option>
+            <option value="1-A">Class 1-A</option>
+            <option value="1-B">Class 1-B</option>
+            <option value="1-C">Class 1-C</option>
+          </select>
+          <div class="header-buttons">
+            <button class="settings-btn">Settings</button>
+            <button class="logout-btn">Logout</button>
+          </div>
+        </div>
+
+        <div class="sections">
+          <!-- Announcements Section -->
+          <div class="section" id="announcements-section">
+            <h2>Announcements & Notifications</h2>
+            <input
+              type="text"
+              id="announcement-input"
+              placeholder="Enter your announcement here"
+            />
+            <input type="date" id="announcement-deadline" />
+            <button id="post-announcement-btn">Post Announcement</button>
+            <div id="announcement-display" class="announcement-display">
+              <p
+                id="no-announcements"
+                style="text-align: center; font-weight: bold"
+              >
+                NO ANNOUNCEMENTS
+              </p>
+            </div>
+          </div>
+
+          <div class="container2">
+            <!-- Assignment Section -->
+            <div class="header">
+              <h2>Assignments</h2>
+              <button class="add-btn" onclick="openAssignmentForm()">
+                + Add Assignment
+              </button>
+            </div>
+
+            <!-- Form Pop-up for Assignment Details -->
+            <div id="assignmentForm" class="form-popup">
+              <form class="form-container">
+                <h2>Add Assignment</h2>
+                <input
+                  type="text"
+                  id="assignment-name"
+                  placeholder="Assignment Name"
+                  required
+                />
+                <input type="date" id="due-date" required />
+                <input
+                  type="file"
+                  id="assignment-file"
+                  accept=".pdf,.ppt,.docx,.doc"
+                  required
+                />
+                <button type="button" onclick="addAssignment()">
+                  Add Assignment
+                </button>
+                <button type="button" onclick="closeAssignmentForm()">
+                  Close
+                </button>
+              </form>
+            </div>
+
+            <!-- Assignments Section -->
+            <div id="assignments-section" class="assignments-section">
+              <p id="no-assignments">No assignments added yet.</p>
+            </div>
+          </div>
+          <!-- Attendance section -->
+
+          <div class="section" id="attendance-section">
+            <div class="section-header">
+              <h2>Manage Attendance</h2>
+              <input type="date" id="date-picker" />
+            </div>
+            <div class="attendance-tracking">
+              <div class="class-card" id="class-1a" style="display: none">
+                Class 1-A<br />Present: 23, Absent: 2
+              </div>
+              <div class="class-card" id="class-1b" style="display: none">
+                Class 1-B<br />Present: 21, Absent: 6
+              </div>
+              <div class="class-card" id="class-1c" style="display: none">
+                Class 1-C<br />Present: 24, Absent: 1
+              </div>
+            </div>
+          </div>
+
+          <!-- Student Profiles Section -->
+          <div class="header">
+            <h2>Student Profiles</h2>
+            <button class="add-btn" onclick="openStudentForm()">
+              + Add Student
+            </button>
+          </div>
+
+          <!-- Form Pop-up for Student Details -->
+          <div id="studentForm" class="form-popup">
+            <form class="form-container">
+              <h2>Add Student</h2>
+              <input
+                type="text"
+                id="student-name"
+                placeholder="Student Name"
+                required
+              />
+              <input
+                type="text"
+                id="student-class"
+                placeholder="Class"
+                required
+              />
+              <button type="button" onclick="addStudent()">Add</button>
+              <button type="button" onclick="closeStudentForm()">Close</button>
+            </form>
+          </div>
+
+          <!-- Students Section -->
+          <div id="students-section" class="students-section">
+            <p id="no-students">No students added yet.</p>
+          </div>
+
+          <div class="your-timetable">
+            <h2>Your Time-Table</h2>
+            <!-- Add the image below -->
+            <img
+              src="./teacher-timetable.png"
+              alt="Timetable"
+              class="timetable-image"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
